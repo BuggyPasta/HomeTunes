@@ -11,6 +11,14 @@ echo "SHARE_SHARE: $SHARE_SHARE"
 echo "SHARE_USERNAME: $SHARE_USERNAME"
 echo "SHARE_PASSWORD: $SHARE_PASSWORD"
 
+# Show NFS exports for debugging
+if command -v showmount >/dev/null 2>&1; then
+    echo "NFS exports on $SHARE_HOST:"
+    showmount -e "$SHARE_HOST"
+else
+    echo "showmount not installed; skipping NFS export check."
+fi
+
 # Clone the repository
 git clone --depth 1 https://github.com/BuggyPasta/HomeTunes.git /app
 
