@@ -11,7 +11,6 @@ services:
       - "12777:12777"
     volumes:
       - /home/user/docker_backup/hometunes:/data
-      - ${SHARE_SHARE}:/music:ro
     env_file:
       - ./.env
     security_opt:
