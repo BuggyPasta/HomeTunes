@@ -11,8 +11,14 @@ services:
       - "12777:12777"
     volumes:
       - /home/user/docker_backup/hometunes:/data
-      - /path/to/your/host/music:/music:ro
+      - /Music:/music:ro
     tmpfs:
       - /tmp
       - /var/run
       - /var/lib/nginx/body
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:12777"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
