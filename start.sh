@@ -3,11 +3,6 @@
 # Clone the repository
 git clone --depth 1 https://github.com/BuggyPasta/HomeTunes.git /app
 
-# Set permissions
-chown -R www-data:www-data /app /data
-chmod -R 755 /app
-chmod -R 777 /data
-
 # Mount NAS share based on type
 if [ "$SHARE_TYPE" = "nfs" ]; then
     mount -t nfs -o ro "$SHARE_HOST:$SHARE_SHARE" /music
