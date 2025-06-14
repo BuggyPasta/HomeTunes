@@ -22,6 +22,9 @@ class MP3Player {
         document.getElementById('back').addEventListener('click', () => stateManager.setMode('home'));
         document.getElementById('home').addEventListener('click', () => stateManager.setMode('home'));
 
+        // Mini-player control listener
+        document.getElementById('mini-expand').addEventListener('click', () => stateManager.setMode('mp3'));
+
         // State change listener
         window.addEventListener('stateChange', (event) => {
             if (event.detail.type === 'mode' && event.detail.state.currentMode === 'mp3') {

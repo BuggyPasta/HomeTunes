@@ -84,6 +84,16 @@ class StateManager {
     }
 
     setupEventListeners() {
+        document.getElementById('mp3-mode').addEventListener('click', () => {
+            console.log('MP3 Mode button clicked.');
+            this.setMode('mp3');
+        });
+
+        document.getElementById('radio-mode').addEventListener('click', () => {
+            console.log('Radio Mode button clicked.');
+            this.setMode('radio');
+        });
+
         window.addEventListener('beforeunload', () => {
             this.saveState();
         });
