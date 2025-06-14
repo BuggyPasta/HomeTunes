@@ -20,4 +20,10 @@ nginx -t
 # Start nginx
 nginx -g 'daemon off;'
 
+echo "" # Add a newline for readability
+echo "--- Internal API Check: /api/stations ---"
+curl -vvv http://localhost:12777/api/stations | cat -v
+echo "----------------------------------------"
+echo "" # Add a newline for readability
+
 echo "✅ HomeTunes container fully initialized and Nginx running." 

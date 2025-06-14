@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Example Stream 1",
+    "url": "http://stream.example.com/stream1"
+  },
+  {
+    "name": "Example Stream 2",
+    "url": "http://stream.example.com/stream2"
+  }
+] 
