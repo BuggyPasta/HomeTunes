@@ -32,11 +32,11 @@ Use of this application is at your own risk.
   * Forward 10 seconds button
   * Next button
   * Back button
-  * Random button
+  * Shuffle button
   * Download button
   * Home button
 - Auto-advance: Alphabetical → next folder on end-of-list
-- Random play: Constrained to current root subfolder
+- Shuffle play: Constrained to current root subfolder
 - Remember last played position when paused
 - Remember last played position across app/browser closures
 - Download preserves original filename
@@ -228,5 +228,5 @@ BuggyPasta, with lots of help from A.I. because BuggyPasta is otherwise WORTHLES
 
 ## Acknowledgments
 
-- Icons from SVG Repo
+- Icons from SVG Repo (Framework7 Line Icons Collection)
 - Built with vanilla HTML, CSS, and JavaScript 

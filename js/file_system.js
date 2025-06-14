@@ -85,16 +85,17 @@ class FileSystem {
 
     async getRandomFile(currentFolder) {
         const contents = await this.getFolderContents(currentFolder);
-        const files = contents.files.filter(file => !stateManager.state.randomHistory.includes(file));
+        if (!contents.files.length) return null;
+
+        const files = contents.files.filter(file => !stateManager.state.shuffleHistory.includes(file));
         
         if (files.length === 0) {
-            // Reset history if all files have been played
-            stateManager.state.randomHistory = [];
+            stateManager.state.shuffleHistory = [];
             return contents.files[Math.floor(Math.random() * contents.files.length)];
         }
-        
+
         const randomFile = files[Math.floor(Math.random() * files.length)];
-        stateManager.addToRandomHistory(randomFile);
+        stateManager.addToShuffleHistory(randomFile);
         return randomFile;
     }
 

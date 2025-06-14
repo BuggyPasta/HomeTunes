@@ -7,7 +7,7 @@ class StateManager {
             isPlaying: false,
             lastPosition: 0,
             lastFolder: '',
-            randomHistory: [],
+            shuffleHistory: [],
             radioStations: []
         };
         
@@ -69,10 +69,10 @@ class StateManager {
         this.saveState();
     }
 
-    addToRandomHistory(track) {
-        this.state.randomHistory.unshift(track);
-        if (this.state.randomHistory.length > 1000) {
-            this.state.randomHistory.pop();
+    addToShuffleHistory(track) {
+        this.state.shuffleHistory.unshift(track);
+        if (this.state.shuffleHistory.length > 1000) {
+            this.state.shuffleHistory.pop();
         }
         this.saveState();
     }

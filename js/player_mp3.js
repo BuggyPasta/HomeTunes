@@ -17,7 +17,7 @@ class MP3Player {
         document.getElementById('next').addEventListener('click', this.playNext.bind(this));
         document.getElementById('rewind10').addEventListener('click', () => this.seek(-10));
         document.getElementById('forward10').addEventListener('click', () => this.seek(10));
-        document.getElementById('random').addEventListener('click', this.playRandom.bind(this));
+        document.getElementById('shuffle').addEventListener('click', this.playShuffle.bind(this));
         document.getElementById('download').addEventListener('click', this.downloadCurrentTrack.bind(this));
         document.getElementById('back').addEventListener('click', () => stateManager.setMode('home'));
         document.getElementById('home').addEventListener('click', () => stateManager.setMode('home'));
@@ -101,10 +101,8 @@ class MP3Player {
         this.audio.currentTime = Math.max(0, Math.min(newTime, this.audio.duration));
     }
 
-    async playRandom() {
-        if (!this.currentTrack) return;
-        
-        const currentFolder = this.getCurrentFolder();
+    async playShuffle() {
+        const currentFolder = this.state.currentFolder;
         const randomFile = await fileSystem.getRandomFile(currentFolder);
         if (randomFile) {
             await this.play(randomFile);
