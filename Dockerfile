@@ -4,11 +4,13 @@ FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y \
     nginx \
     curl \
-    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Create necessary directories
-RUN mkdir -p /app /data
+RUN mkdir -p /data
+
+# Copy application files
+COPY . /app
 
 # Set up nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf

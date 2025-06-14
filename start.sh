@@ -1,29 +1,20 @@
 #!/bin/bash
 
-set -e # Exit immediately if a command exits with a non-zero status.
-
-echo "Checking network connectivity to GitHub..."
-# Check network connectivity (e.g., ping GitHub, timeout after 5 seconds)
-if ! ping -c 1 -W 5 github.com &> /dev/null; then
-    echo "❌ Network connectivity to GitHub failed. Cannot clone repository."
+# Check if the application files are present in /app
+if [ -d "/app/index.html" ]; then
+    echo "✅ APPLICATION FILES: /app contains the application files."
+else
+    echo "❌ APPLICATION FILES: /app does not contain the application files. Image build might have failed or files are missing."
     exit 1
 fi
-echo "✅ Network connectivity to GitHub OK."
 
-# Only clone the repo if /app does not exist or is empty
-if [ ! -d "/app" ] || [ -z "$(ls -A /app 2>/dev/null)" ]; then
-    echo "Cloning HomeTunes repository into /app..."
-    # Use GIT_TERMINAL_PROMPT=0 to prevent interactive prompts
-    # Use timeout to prevent indefinite hangs (e.g., 60 seconds)
-    if ! GIT_TERMINAL_PROMPT=0 timeout 60 git clone --depth 1 https://github.com/BuggyPasta/HomeTunes.git /app; then
-        echo "❌ Git clone failed or timed out."
-        exit 1
-    fi
-    echo "✅ Repository cloned successfully."
+# Check if the host music share is accessible
+if [ -d "/music" ] && [ "$(ls -A /music 2>/dev/null)" ]; then
+    echo "✅ HOST MUSIC SHARE: /music is accessible."
 else
-    echo "/app directory already contains content. Skipping git clone."
+    echo "❌ HOST MUSIC SHARE: /music is NOT accessible or empty. Please mount your music folder from the host as read-only to /music."
+    exit 1
 fi
 
 # Start nginx
-echo "Starting Nginx..."
 nginx -g 'daemon off;' 
