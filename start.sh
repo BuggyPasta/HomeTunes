@@ -17,13 +17,14 @@ echo "Attempting to start Nginx..."
 echo "Running Nginx configuration test..."
 nginx -t
 
+# Directly inspect radio_stations.json content for debugging
+echo "" # Add a newline for readability
+echo "--- Inspecting radio_stations.json content ---"
+cat /app/radio_stations.json | cat -v
+echo "--------------------------------------------"
+echo "" # Add a newline for readability
+
 # Start nginx
 nginx -g 'daemon off;'
-
-echo "" # Add a newline for readability
-echo "--- Internal API Check: /api/stations ---"
-curl -vvv http://localhost:12777/api/stations | cat -v
-echo "----------------------------------------"
-echo "" # Add a newline for readability
 
 echo "✅ HomeTunes container fully initialized and Nginx running." 
