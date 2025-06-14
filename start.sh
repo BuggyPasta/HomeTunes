@@ -1,17 +1,28 @@
 #!/bin/bash
 
+# Print current user and environment for debugging
+whoami
+id
+
+# Print .env variables for debugging
+echo "SHARE_TYPE: $SHARE_TYPE"
+echo "SHARE_HOST: $SHARE_HOST"
+echo "SHARE_SHARE: $SHARE_SHARE"
+echo "SHARE_USERNAME: $SHARE_USERNAME"
+echo "SHARE_PASSWORD: $SHARE_PASSWORD"
+
 # Clone the repository
 git clone --depth 1 https://github.com/BuggyPasta/HomeTunes.git /app
 
 # Mount NAS share based on type
 if [ "$SHARE_TYPE" = "nfs" ]; then
-    mount -t nfs -o ro "$SHARE_HOST:$SHARE_SHARE" /music
+    mount -v -t nfs -o ro "$SHARE_HOST:$SHARE_SHARE" /music
 elif [ "$SHARE_TYPE" = "smb" ]; then
     if [ -z "$SHARE_USERNAME" ] || [ -z "$SHARE_PASSWORD" ]; then
         echo "Error: SHARE_USERNAME and SHARE_PASSWORD are required for SMB"
         exit 1
     fi
-    mount -t cifs -o ro,username="$SHARE_USERNAME",password="$SHARE_PASSWORD" "//$SHARE_HOST$SHARE_SHARE" /music
+    mount -v -t cifs -o ro,username="$SHARE_USERNAME",password="$SHARE_PASSWORD" "//$SHARE_HOST$SHARE_SHARE" /music
 else
     echo "Invalid SHARE_TYPE. Must be 'nfs' or 'smb'"
     exit 1
