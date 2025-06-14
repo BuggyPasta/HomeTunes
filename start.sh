@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Clone the repository
+git clone --depth 1 https://github.com/BuggyPasta/HomeTunes.git /app
+
+# Set permissions
+chown -R www-data:www-data /app /data
+chmod -R 755 /app
+chmod -R 777 /data
+
+# Mount NAS share based on type
+if [ "$SHARE_TYPE" = "nfs" ]; then
+    mount -t nfs -o ro "$SHARE_HOST:$SHARE_SHARE" /music
+elif [ "$SHARE_TYPE" = "smb" ]; then
+    if [ -z "$SHARE_USERNAME" ] || [ -z "$SHARE_PASSWORD" ]; then
+        echo "Error: SHARE_USERNAME and SHARE_PASSWORD are required for SMB"
+        exit 1
+    fi
+    mount -t cifs -o ro,username="$SHARE_USERNAME",password="$SHARE_PASSWORD" "//$SHARE_HOST$SHARE_SHARE" /music
+else
+    echo "Invalid SHARE_TYPE. Must be 'nfs' or 'smb'"
+    exit 1
+fi
+
+# Start nginx
+nginx -g 'daemon off;' 

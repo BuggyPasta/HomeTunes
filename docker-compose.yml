@@ -1,0 +1,23 @@
+services:
+  hometunes:
+    container_name: hometunes
+    restart: unless-stopped
+    build:
+      context: https://github.com/BuggyPasta/HomeTunes.git
+      dockerfile: Dockerfile
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    ports:
+      - "12777:12777"
+    volumes:
+      - /home/alex/docker_backup/hometunes:/data
+      - ${SHARE_SHARE}:/music:ro
+    env_file:
+      - ./.env
+    security_opt:
+      - no-new-privileges
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run
+    user: "1000:1000"  # Replace with your user:group ID 

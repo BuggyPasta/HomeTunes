@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HomeTunes</title>
+    <link rel="stylesheet" href="styles/dark.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">HomeTunes</div>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search...">
+            <button id="clear-search" class="hidden">×</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen active">
+            <div class="mode-buttons">
+                <button id="mp3-mode" class="mode-button">
+                    <img src="icons/mp3.svg" alt="MP3">
+                    <span>MP3 Player</span>
+                </button>
+                <button id="radio-mode" class="mode-button">
+                    <img src="icons/radio.svg" alt="Radio">
+                    <span>Radio</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- MP3 Player Screen -->
+        <div id="mp3-screen" class="screen">
+            <div class="player-container">
+                <div class="artwork">
+                    <img id="current-artwork" src="icons/song.svg" alt="Album Art">
+                </div>
+                <div class="track-info">
+                    <div id="artist" class="marquee">Artist</div>
+                    <div id="title" class="marquee">Title</div>
+                </div>
+                <div class="controls-row">
+                    <button id="previous" class="control-button">
+                        <img src="icons/previous.svg" alt="Previous">
+                    </button>
+                    <button id="rewind10" class="control-button">
+                        <img src="icons/rewind10.svg" alt="Rewind 10s">
+                    </button>
+                    <button id="play-pause" class="control-button">
+                        <img src="icons/play.svg" alt="Play">
+                    </button>
+                    <button id="forward10" class="control-button">
+                        <img src="icons/forward10.svg" alt="Forward 10s">
+                    </button>
+                    <button id="next" class="control-button">
+                        <img src="icons/next.svg" alt="Next">
+                    </button>
+                </div>
+                <div class="controls-row">
+                    <button id="back" class="control-button">
+                        <img src="icons/back.svg" alt="Back">
+                    </button>
+                    <button id="random" class="control-button">
+                        <img src="icons/random.svg" alt="Random">
+                    </button>
+                    <button id="download" class="control-button">
+                        <img src="icons/download.svg" alt="Download">
+                    </button>
+                    <button id="home" class="control-button">
+                        <img src="icons/home.svg" alt="Home">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Radio Screen -->
+        <div id="radio-screen" class="screen">
+            <div class="station-list" id="station-list">
+                <!-- Stations will be populated dynamically -->
+            </div>
+            <button id="edit-stations" class="edit-button">Edit Stations</button>
+        </div>
+    </main>
+
+    <!-- Mini Player -->
+    <div id="mini-player" class="mini-player">
+        <div class="mini-player-content">
+            <div class="mini-info">
+                <div id="mini-artist" class="marquee">Artist</div>
+                <div id="mini-title" class="marquee">Title</div>
+            </div>
+            <div class="mini-controls">
+                <button id="mini-play-pause" class="control-button">
+                    <img src="icons/play.svg" alt="Play">
+                </button>
+                <button id="mini-expand" class="control-button">
+                    <img src="icons/expand.svg" alt="Expand">
+                </button>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/state_manager.js"></script>
+    <script src="js/metadata_handler.js"></script>
+    <script src="js/player_mp3.js"></script>
+    <script src="js/player_radio.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html> 
