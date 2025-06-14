@@ -87,15 +87,21 @@ class FileSystem {
         const contents = await this.getFolderContents(currentFolder);
         if (!contents.files.length) return null;
 
-        const files = contents.files.filter(file => !stateManager.state.shuffleHistory.includes(file));
+        // Get shuffle history from state manager if available
+        const shuffleHistory = window.stateManager ? window.stateManager.state.shuffleHistory : [];
+        const files = contents.files.filter(file => !shuffleHistory.includes(file));
         
         if (files.length === 0) {
-            stateManager.state.shuffleHistory = [];
+            if (window.stateManager) {
+                window.stateManager.state.shuffleHistory = [];
+            }
             return contents.files[Math.floor(Math.random() * contents.files.length)];
         }
 
         const randomFile = files[Math.floor(Math.random() * files.length)];
-        stateManager.addToShuffleHistory(randomFile);
+        if (window.stateManager) {
+            window.stateManager.addToShuffleHistory(randomFile);
+        }
         return randomFile;
     }
 

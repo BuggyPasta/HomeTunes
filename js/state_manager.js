@@ -36,9 +36,16 @@ class StateManager {
     }
 
     setMode(mode) {
+        console.log('Setting mode to:', mode);
         this.state.currentMode = mode;
         this.saveState();
         this.notifyStateChange('mode');
+        
+        // Update UI
+        document.querySelectorAll('.screen').forEach(screen => {
+            screen.classList.remove('active');
+        });
+        document.getElementById(`${mode}-screen`).classList.add('active');
     }
 
     setCurrentTrack(track) {
@@ -107,5 +114,5 @@ class StateManager {
     }
 }
 
-// Initialize state manager
-const stateManager = new StateManager(); 
+// Initialize state manager and expose it globally
+window.stateManager = new StateManager(); 
