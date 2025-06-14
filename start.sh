@@ -1,46 +1,8 @@
 #!/bin/bash
 
-# Print current user and environment for debugging
-whoami
-id
-
-# Print .env variables for debugging
-echo "SHARE_TYPE: $SHARE_TYPE"
-echo "SHARE_HOST: $SHARE_HOST"
-echo "SHARE_SHARE: $SHARE_SHARE"
-echo "SHARE_USERNAME: $SHARE_USERNAME"
-echo "SHARE_PASSWORD: $SHARE_PASSWORD"
-
-# Show NFS exports for debugging
-if command -v showmount >/dev/null 2>&1; then
-    echo "NFS exports on $SHARE_HOST:"
-    showmount -e "$SHARE_HOST"
-else
-    echo "showmount not installed; skipping NFS export check."
-fi
-
-# Clone the repository
-git clone --depth 1 https://github.com/BuggyPasta/HomeTunes.git /app
-
-# Mount NAS share based on type
-if [ "$SHARE_TYPE" = "nfs" ]; then
-    mount -v -t nfs -o ro "$SHARE_HOST:$SHARE_SHARE" /music
-elif [ "$SHARE_TYPE" = "smb" ]; then
-    if [ -z "$SHARE_USERNAME" ] || [ -z "$SHARE_PASSWORD" ]; then
-        echo "Error: SHARE_USERNAME and SHARE_PASSWORD are required for SMB"
-        exit 1
-    fi
-    mount -v -t cifs -o ro,username="$SHARE_USERNAME",password="$SHARE_PASSWORD" "//$SHARE_HOST$SHARE_SHARE" /music
-else
-    echo "Invalid SHARE_TYPE. Must be 'nfs' or 'smb'"
-    exit 1
-fi
-
-# Check if the share is accessible
-if [ -d "/music" ] && [ "$(ls -A /music 2>/dev/null)" ]; then
-    echo "✅ SHARE MOUNT SUCCESS: /music is accessible."
-else
-    echo "❌ SHARE MOUNT FAILURE: /music is NOT accessible. Check your NAS, .env, and Docker volume settings."
+# Only clone the repo if /app does not exist or is empty
+if [ ! -d "/app" ] || [ -z "$(ls -A /app 2>/dev/null)" ]; then
+    git clone --depth 1 https://github.com/BuggyPasta/HomeTunes.git /app
 fi
 
 # Start nginx

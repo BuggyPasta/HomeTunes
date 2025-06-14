@@ -109,7 +109,7 @@ Use of this application is at your own risk.
 ### Prerequisites
 - Docker and Docker Compose installed
 - Dockge instance running
-- NAS with NFS or SMB share containing MP3 files
+- A local directory on the host containing your MP3 files
 
 ### Steps
 
@@ -132,43 +132,18 @@ services:
       - "12777:12777"
     volumes:
       - /home/user/docker_backup/hometunes:/data
-      - ${SHARE_SHARE}:/music:ro
-    env_file:
-      - ./.env
-    security_opt:
-      - no-new-privileges
-    read_only: true
+      - /path/to/your/host/music:/music:ro
     tmpfs:
       - /tmp
       - /var/run
-    user: "1000:1000"  # Replace with your user:group ID
+      - /var/lib/nginx/body
 ```
 
-2. **Configure Environment Variables**
-   Create a `.env` file with the following content:
-   ```
-   # Choose either 'nfs' or 'smb' for your NAS type
-   SHARE_TYPE=nfs
-
-   # Your NAS IP address (e.g., 192.168.1.100)
-   SHARE_HOST=192.168.1.100
-
-   # For NFS: Full path to share (e.g., /mnt/Music)
-   # For SMB: Just the share name (e.g., Music)
-   SHARE_SHARE=/mnt/Music
-
-   # DELETE THESE TWO LINES IF USING NFS
-   # For SMB only: Your NAS username
-   SHARE_USERNAME=admin
-   # For SMB only: Your NAS password
-   SHARE_PASSWORD=yourpassword
-   ```
-
-3. **Configure Volumes**
+2. **Configure Volumes**
    - `/home/user/docker_backup/hometunes:/data` - For persistent configuration
-   - `${SHARE_SHARE}:/music:ro` - For read-only access to your music files
+   - `/path/to/your/host/music:/music:ro` - For read-only access to your music files
 
-4. **Deploy**
+3. **Deploy**
    - Click "Deploy" in Dockge
    - Wait for the container to build and start
    - Access the application at `http://your-server:12777`
@@ -203,7 +178,6 @@ services:
 ### Common Issues
 
 1. **Cannot access NAS**
-   - Check NAS credentials in .env file
    - Verify NAS is accessible from the Docker host
    - Check share permissions
 

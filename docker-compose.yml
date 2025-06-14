@@ -11,10 +11,7 @@ services:
       - "12777:12777"
     volumes:
       - /home/user/docker_backup/hometunes:/data
-    env_file:
-      - ./.env
-    security_opt:
-      - no-new-privileges
+      - /path/to/your/host/music:/music:ro
     tmpfs:
       - /tmp
       - /var/run

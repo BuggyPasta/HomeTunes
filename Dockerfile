@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create necessary directories
-RUN mkdir -p /app /data /music
+RUN mkdir -p /app /data
 
 # Set up nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
