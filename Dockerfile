@@ -4,13 +4,15 @@ FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y \
     nginx \
     curl \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 # Create necessary directories
 RUN mkdir -p /data
 
-# Copy application files
-COPY . /app
+# Clone application files into /app during build
+RUN git clone --depth 1 https://github.com/BuggyPasta/HomeTunes.git /app
+RUN chmod -R 755 /app
 
 # Set up nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
