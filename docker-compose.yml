@@ -20,4 +20,4 @@ services:
     tmpfs:
       - /tmp
       - /var/run
-    user: "1000:1000"  # Replace with your user:group ID 
+    user: "1000:1000"

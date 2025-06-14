@@ -22,5 +22,12 @@ else
     exit 1
 fi
 
+# Check if the share is accessible
+if [ -d "/music" ] && [ "$(ls -A /music 2>/dev/null)" ]; then
+    echo "✅ SHARE MOUNT SUCCESS: /music is accessible."
+else
+    echo "❌ SHARE MOUNT FAILURE: /music is NOT accessible. Check your NAS, .env, and Docker volume settings."
+fi
+
 # Start nginx
 nginx -g 'daemon off;' 
