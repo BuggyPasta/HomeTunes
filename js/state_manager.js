@@ -1,5 +1,6 @@
 class StateManager {
     constructor() {
+        console.log('StateManager: Initializing...');
         this.state = {
             currentMode: 'home', // 'home', 'mp3', 'radio'
             currentTrack: null,
@@ -13,6 +14,7 @@ class StateManager {
         
         this.loadState();
         this.setupEventListeners();
+        console.log('StateManager: Initialization complete');
     }
 
     loadState() {
@@ -36,7 +38,7 @@ class StateManager {
     }
 
     setMode(mode) {
-        console.log('Setting mode to:', mode);
+        console.log('StateManager: Setting mode to:', mode);
         this.state.currentMode = mode;
         this.saveState();
         this.notifyStateChange('mode');
@@ -45,7 +47,13 @@ class StateManager {
         document.querySelectorAll('.screen').forEach(screen => {
             screen.classList.remove('active');
         });
-        document.getElementById(`${mode}-screen`).classList.add('active');
+        const targetScreen = document.getElementById(`${mode}-screen`);
+        if (targetScreen) {
+            targetScreen.classList.add('active');
+            console.log('StateManager: Screen updated to', mode);
+        } else {
+            console.error('StateManager: Could not find screen element for mode', mode);
+        }
     }
 
     setCurrentTrack(track) {
@@ -91,22 +99,39 @@ class StateManager {
     }
 
     setupEventListeners() {
-        document.getElementById('mp3-mode').addEventListener('click', () => {
+        console.log('StateManager: Setting up event listeners...');
+        
+        const mp3Button = document.getElementById('mp3-mode');
+        const radioButton = document.getElementById('radio-mode');
+        
+        if (!mp3Button || !radioButton) {
+            console.error('StateManager: Could not find mode buttons!');
+            return;
+        }
+        
+        console.log('StateManager: Found mode buttons, attaching listeners...');
+        
+        mp3Button.addEventListener('click', (e) => {
             console.log('MP3 Mode button clicked.');
+            e.preventDefault();
             this.setMode('mp3');
         });
 
-        document.getElementById('radio-mode').addEventListener('click', () => {
+        radioButton.addEventListener('click', (e) => {
             console.log('Radio Mode button clicked.');
+            e.preventDefault();
             this.setMode('radio');
         });
 
         window.addEventListener('beforeunload', () => {
             this.saveState();
         });
+        
+        console.log('StateManager: Event listeners setup complete');
     }
 
     notifyStateChange(type) {
+        console.log('StateManager: Notifying state change:', type);
         const event = new CustomEvent('stateChange', {
             detail: { type, state: this.state }
         });
@@ -115,4 +140,5 @@ class StateManager {
 }
 
 // Initialize state manager and expose it globally
+console.log('StateManager: Creating instance...');
 window.stateManager = new StateManager(); 

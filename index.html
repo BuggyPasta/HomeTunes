@@ -22,11 +22,11 @@
         <!-- Home Screen -->
         <div id="home-screen" class="screen active">
             <div class="mode-buttons">
-                <button id="mp3-mode" class="mode-button">
+                <button type="button" id="mp3-mode" class="mode-button" onclick="window.stateManager.setMode('mp3')">
                     <img src="icons/mp3.svg" alt="MP3">
                     <span>MP3 Player</span>
                 </button>
-                <button id="radio-mode" class="mode-button">
+                <button type="button" id="radio-mode" class="mode-button" onclick="window.stateManager.setMode('radio')">
                     <img src="icons/radio.svg" alt="Radio">
                     <span>Radio</span>
                 </button>

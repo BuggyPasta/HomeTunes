@@ -98,6 +98,7 @@ main {
     gap: 2rem;
     flex-wrap: wrap;
     justify-content: center;
+    z-index: 1000;
 }
 
 .mode-button {
@@ -112,15 +113,29 @@ main {
     align-items: center;
     gap: 0.5rem;
     transition: background-color 0.3s;
+    position: relative;
+    z-index: 1001;
+    min-width: 120px;
+    min-height: 120px;
 }
 
 .mode-button:hover {
     background-color: var(--button-hover);
 }
 
+.mode-button:active {
+    background-color: var(--button-hover);
+    transform: scale(0.98);
+}
+
 .mode-button img {
     width: 48px;
     height: 48px;
+    pointer-events: none;
+}
+
+.mode-button span {
+    pointer-events: none;
 }
 
 /* Player Styles */
