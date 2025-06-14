@@ -131,7 +131,7 @@ services:
     ports:
       - "12777:12777"
     volumes:
-      - /home/alex/docker_backup/hometunes:/data
+      - /home/user/docker_backup/hometunes:/data
       - ${SHARE_SHARE}:/music:ro
     env_file:
       - ./.env
@@ -165,7 +165,7 @@ services:
    ```
 
 3. **Configure Volumes**
-   - `/home/alex/docker_backup/hometunes:/data` - For persistent configuration
+   - `/home/user/docker_backup/hometunes:/data` - For persistent configuration
    - `${SHARE_SHARE}:/music:ro` - For read-only access to your music files
 
 4. **Deploy**
